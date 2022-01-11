@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
-    "start": "docker-compose up",
+    "start": "docker-compose up -d",
     "accounts": "src/init_accounts.sh",
     "stop": "docker-compose down",
     "log": "docker-compose logs -f"
