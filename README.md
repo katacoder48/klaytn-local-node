@@ -6,11 +6,18 @@
 
 클레이튼 로컬 테스트를 위한 리파짓토리로, [klaytn/local-klaytn-deploy](https://github.com/klaytn/local-klaytn-deploy) 을 기반으로 작성되었습니다.
 
+`http://localhost:8551`로 자유롭게 접근가능한 테스트용 로컬 노드를 오픈합니다.
+
+<img width="345" alt="스크린샷 2022-01-12 오전 2 15 23" src="https://user-images.githubusercontent.com/96544148/148989962-ae059baf-9046-4732-b3b9-e60edd4826c4.png">
+
 
 
 ### Usage
 
 #### 1. 로컬 노드 시작
+
+`http://localhost:8551`으로 접근가능한 로컬 노드가 오픈됩니다.
+
 
 ````shell
 yarn start
