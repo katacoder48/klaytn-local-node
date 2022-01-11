@@ -1,0 +1,38 @@
+version: '3'
+services:
+  CN-0:
+    hostname: CN-0
+    image: klaytn/klaytn:latest
+    ports:
+      - '32323:32323'
+      - '8551:8551'
+      - '61001:61001'
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /klaytn
+        echo '{"config":{"chainId":203,"istanbulCompatibleBlock":0,"londonCompatibleBlock":0,"istanbul":{"epoch":604800,"policy":0,"sub":21},"unitPrice":0,"deriveShaImpl":0,"governance":null},"timestamp":"0x61dd9a6b","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000f85ad59443e8ee4561c44df1a761dfdf878d53d1ee37dac7b8410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0","governanceData":null,"blockScore":"0x1","alloc":{"43e8ee4561c44df1a761dfdf878d53d1ee37dac7":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"}},"number":"0x0","gasUsed":"0x0","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000"}' > /klaytn/genesis.json
+        echo '["kni://4afbb55c2402bb2d30557d6f7d0fa2b35fff04470716defb01885a71fcd556655e84297f15971f29de8816f95290d9bcab8aa3e781b34bfaefe8bb246ce7b995@172.16.239.10:32323?discport=0\u0026ntype=cn"]' > /klaytn/static-nodes.json
+        kcn --datadir "/klaytn" init "/klaytn/genesis.json"
+        echo "# docker-compose" >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'NETWORK=""' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'DATA_DIR="/klaytn"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'LOG_DIR="$$DATA_DIR/log"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'RPC_ENABLE=1' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'RPC_API="db,klay,net,web3,miner,personal,txpool,debug,admin,istanbul,mainbridge,subbridge"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'NETWORK_ID="203"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'NO_DISCOVER=1' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'ADDITIONAL="$$ADDITIONAL --identity \"CN-0\""' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'ADDITIONAL="$$ADDITIONAL --nodekeyhex 72db61be46af8b2fa7960c9cc7d5b24dcc9ac92f06566c02dc5c323c66169f97"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'REWARDBASE=0x43E8Ee4561c44DF1A761dFdf878D53d1Ee37Dac7' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'ADDITIONAL="$$ADDITIONAL --debug --metrics --prometheus"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        /klaytn-docker-pkg/bin/kcnd start
+        sleep 1
+        ken attach --exec "personal.importRawKey('72db61be46af8b2fa7960c9cc7d5b24dcc9ac92f06566c02dc5c323c66169f97', '')" http://localhost:8551
+        ken attach --exec "personal.unlockAccount('0x43E8Ee4561c44DF1A761dFdf878D53d1Ee37Dac7', '', 999999999)" http://localhost:8551
+        sleep 1
+        ken attach --exec "personal.importRawKey('72db61be46af8b2fa7960c9cc7d5b24dcc9ac92f06566c02dc5c323c66169f97','')" http://localhost:8551
+        ken attach --exec "personal.unlockAccount('0x43E8Ee4561c44DF1A761dFdf878D53d1Ee37Dac7','')" http://localhost:8551
+        tail -F klaytn/log/kcnd.out
+    restart: "no"

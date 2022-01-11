@@ -1,0 +1,13 @@
+{
+  "name": "klaytn-local-node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "docker-compose up",
+    "accounts": "src/init_accounts.sh",
+    "stop": "docker-compose down",
+    "log": "docker-compose logs -f"
+  }
+}
