@@ -16,7 +16,7 @@
 
 #### 1. 로컬 노드 시작
 
-`http://localhost:8551`으로 접근가능한 로컬 노드가 오픈됩니다.
+`http://localhost:8551`으로 접근가능한 로컬 노드를 오픈합니다.
 
 
 ````shell
@@ -25,7 +25,7 @@ yarn start
 
 #### 2. 100 Klay씩 받은 계정 생성하기
 
-`./privateKeys.js`에 100klay를 받는 10개의 비밀키가 생성됩니다.
+`./privateKeys.js`에 100klay를 받는 10개의 비밀키가 생성됩니다. 지갑에 연동하거나, 해당 계정을 이용해서 테스트 스마트 컨트랙트를 배포할 수 있습니다.
 
 ````shell
 yarn accounts
@@ -33,11 +33,15 @@ yarn accounts
 
 #### 3. 로그 확인
 
+로컬 노드에 대한 로그 정보를 생성합니다.
+
 ````shell
 yarn log
 ````
 
 #### 4. 로컬 노드 종료
+
+로컬 노드를 종료합니다. 
 
 ````shell
 yarn stop
