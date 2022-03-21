@@ -11,6 +11,7 @@
 <img width="345" alt="스크린샷 2022-01-12 오전 2 15 23" src="https://user-images.githubusercontent.com/96544148/148989962-ae059baf-9046-4732-b3b9-e60edd4826c4.png">
 
 ### 사전 설치 사항
+=======
 
 * [nodejs](https://nodejs.org/ko/download/)
 * [docker](https://www.docker.com/)
