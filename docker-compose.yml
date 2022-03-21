@@ -6,6 +6,7 @@ services:
     ports:
       - '32323:32323'
       - '8551:8551'
+      - '8552:8552'
       - '61001:61001'
     entrypoint:
       - /bin/sh
@@ -21,12 +22,18 @@ services:
         echo 'LOG_DIR="$$DATA_DIR/log"' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'RPC_ENABLE=1' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'RPC_API="db,klay,net,web3,miner,personal,txpool,debug,admin,istanbul,mainbridge,subbridge"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'WS_ENABLE=1' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'WS_API="admin,debug,klay,miner,net,personal,rpc,txpool,web3"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'WS_ADDR="0.0.0.0"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'WS_ORIGINS="*"' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'WS_PORT=8552' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'METRICS=0' >> /klaytn-docker-pkg/conf/kcnd.conf
+        echo 'PROMETHEUS=0' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'NETWORK_ID="203"' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'NO_DISCOVER=1' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'ADDITIONAL="$$ADDITIONAL --identity \"CN-0\""' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'ADDITIONAL="$$ADDITIONAL --nodekeyhex 72db61be46af8b2fa7960c9cc7d5b24dcc9ac92f06566c02dc5c323c66169f97"' >> /klaytn-docker-pkg/conf/kcnd.conf
         echo 'REWARDBASE=0x43E8Ee4561c44DF1A761dFdf878D53d1Ee37Dac7' >> /klaytn-docker-pkg/conf/kcnd.conf
-        echo 'ADDITIONAL="$$ADDITIONAL --debug --metrics --prometheus"' >> /klaytn-docker-pkg/conf/kcnd.conf
         /klaytn-docker-pkg/bin/kcnd start
         sleep 1
         ken attach --exec "personal.importRawKey('72db61be46af8b2fa7960c9cc7d5b24dcc9ac92f06566c02dc5c323c66169f97', '')" http://localhost:8551
